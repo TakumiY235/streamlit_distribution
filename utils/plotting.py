@@ -13,7 +13,11 @@ def plot_distribution(data, pdf, x, dist_type, dist_info):
     
     # サンプル分布のプロット
     graph1.write("標本分布")
-    df_data = pd.DataFrame(data, columns=["value"])
+    if dist_info["type"] == "discrete" and dist_type == "多項分布":
+        # 多項分布の場合、データをカテゴリごとに分割
+        df_data = pd.DataFrame(data, columns=[f"カテゴリ{i+1}" for i in range(data.shape[1])])
+    else:
+        df_data = pd.DataFrame(data, columns=["value"])
     graph1.line_chart(df_data)
     
     # 確率密度関数のプロット
